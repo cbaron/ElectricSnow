@@ -1,15 +1,23 @@
 define(
 
-    [ 'jquery', 'underscore', 'backbone', 'views/home' ],
+    [ 'jquery', 'underscore', 'backbone', 'views/home', 'views/music' ],
 
-    function( $, _, Backbone, TitleView, CreateCharacterView ) {
+    function( $, _, Backbone, HomeView, MusicView ) {
       
         var AppRouter = Backbone.Router.extend( {
 
             routes: {
 
+                'music': 'musicRoute',
+
                 '*actions': 'defaultRoute'
+                
                                         
+            },
+
+            musicRoute: function() {
+
+                new MusicView( { appRouter: this } );
             },
 
             defaultRoute: function() {

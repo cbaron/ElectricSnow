@@ -1,6 +1,32 @@
-
 body {
 
     margin: 0px;
     overflow: hidden;
+}
+
+.homeContainer {
+
+    font-size: 3em;
+}
+
+.homeButton {
+
+    position: relative;
+    float: left;
+    cursor: pointer;
+}
+
+.homeButtonText {
+
+    color: white;
+    position: relative;
+    float: left;
+}
+
+.homeDomain {
+
+    text-align: center;
+    background-color: white;
+    position: absolute;
+
 }

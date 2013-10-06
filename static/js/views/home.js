@@ -1,12 +1,17 @@
 define(
 
-    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'text!templates/homePage.html' ],
+    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'text!templates/homePage.html' ],
             
-    function( $, undefined, _, Backbone, util, titleViewTemplate ) {
+    function( $, undefined, _, Backbone, util, config, homePageTemplate ) {
 
-        var TitleView = Backbone.View.extend( {
+        var HomeView = Backbone.View.extend( {
         
-            el: $('#container'),
+            el: $('#pageContainer'),
+
+            events: {
+
+                'click .homeButton': 'close'
+            },
 
             initialize: function() {
 
@@ -17,20 +22,35 @@ define(
 
             render: function() {
 
-                var data = {
+                this.$content =
+                    $( _.template( homePageTemplate, { } ) )
+                            .height( util.windowHeight )
+                            .width( util.windowWidth )
+                            .appendTo( this.$el );
 
-                    backgroundImageSource: util.getStaticImageUrl( 'titleBackground.jpg' ),
-                    //backgroundImageSource: util.getStaticImageUrl( 'psychadelicTitle.gif' ),
-                    width: util.windowWidth,
-                    height: util.windowHeight
+                this.$homeButton =
+                    this.$content
+                        .find('.homeButton').css( {
+                            'background-color': config.blueColor,
+                            'height': ( util.windowHeight / 2 ),
+                            'width': ( util.windowWidth / 2 ) } )
+                
+                this.$homeDomain = this.$content.find('.homeDomain');
 
-                };
+                this.$homeButton.css( {
+                    top: ( ( util.windowHeight - this.$homeButton.outerHeight( true ) ) / 3 ),
+                    left: ( ( util.windowWidth - this.$homeButton.outerWidth( true ) ) / 2 ) } );
 
-                console.log( data );
-
-                this.dom = $( _.template( titleViewTemplate, data ) );
-
-                this.$el.append( this.dom );
+                util.centerEl( {
+                    el: $( this.$homeButton.find('.homeButtonText') ),
+                    parentEl: this.$homeButton } );
+              
+                this.$homeDomain.css( {
+                    'color': config.blueColor,
+                    'left': ( ( util.windowWidth - this.$homeDomain.outerWidth( true ) ) / 2 ),
+                    'top': this.$homeButton.offset().top
+                           + this.$homeButton.outerHeight( true )
+                           + ( this.$homeButton.outerHeight( true ) * .2 ) } );
             },
 
             handleKeyUp: function( e ) {
@@ -39,25 +59,25 @@ define(
                 
                     $(document).off( 'keyup', $.proxy( this.handleKeyUp, this ) );
                     this.close();
-
                }
 
             },
 
             close: function() {
 
-                this.dom.fadeOut( { duration: 1000, done: $.proxy( this.navigate, this ) } );
+                this.$content.fadeOut( { duration: 1000, done: $.proxy( this.navigate, this ) } );
             },
 
             navigate: function() {
 
-                this.dom.remove();
-                this.options.appRouter.navigate( 'createCharacter', { trigger: true } ); 
+                this.$content.remove();
+
+                this.options.appRouter.navigate( 'music', { trigger: true } ); 
 
             }
 
         } );
                                                               
-        return TitleView;
+        return HomeView;
     }
 );
