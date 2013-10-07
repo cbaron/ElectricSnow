@@ -31,6 +31,8 @@ require(
     
     function( App ) {
 
+        _.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
+
         App.initialize();
     }
 );

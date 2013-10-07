@@ -1,18 +1,22 @@
 <div class="songContainer">
 
-    <div class="playButton"
-         style="background-color: <%= backgroundColor %>;
-                float: left;
-                text-align: center;
-                height: 1em;
-                width: 1em;">Play</div>
+    <div class="songTopPanel">
 
-    <div class="purchaseButton"
-         style="color: <%= backgroundColor %>">
-        <span>ElectricSnow.com
+        <div class="playButton">
+            <div class="playButtonText">Play</div>
+        </div>
+    
+        <div class="purchaseButton">
+            <div class="purchaseLabel">Purchase</div>
+            <div class="costLabel">.99</div>
+            <div style="clear:both;"></div>
+        </div>    
+            
+        <div style="clear:both;"></div>
+
     </div>
 
-    <div style="clear:both;"></div>
+    <div class="songName">{{name}}</div>
 
 </div>
          

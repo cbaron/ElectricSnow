@@ -1,35 +1,63 @@
 define(
 
-    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'text!templates/musicPage.html' ],
+    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'views/modal', 'text!templates/musicPage.html' ],
             
-    function( $, undefined, _, Backbone, util, musicPageTemplate ) {
+    function( $, undefined, _, Backbone, util, config, ModalView, musicPageTemplate  ) {
 
         var MusicView = Backbone.View.extend( {
         
             el: $('#pageContainer'),
 
+            events: {
+
+                'click .playButton': 'playMusic',
+                
+                'click .purchaseMusic': 'purchaseMusic'
+            },
+
             initialize: function() {
 
+                this.songs = config.songs;
+
                 this.render();
+
             },
 
             render: function() {
 
-                var data = {
+                for( var i = 0, ii = this.songs.length; i < ii; i++ ) {
 
-                    backgroundColor: '#15375e',
-                    width: ( util.windowWidth / 2 ),
-                    height: ( util.windowHeight / 2 )
+                    var songInfo = this.songs[ i ];
 
-                };
+                    songInfo.$songContent =
+                        $( _.template( musicPageTemplate, { name: songInfo.name } ) )
+                            .appendTo( this.$el );
 
-                this.content =
-                    $( _.template( homePageTemplate, data ) ).appendTo( this.$el );
+                    songInfo.$els = util.slurpTemplate( songInfo.$songContent );
+
+                    _.each( songInfo.$els.playButton.concat( songInfo.$els.purchaseButton ),
+                            function( $el, undefined, undefined ) {
+                                $el.css( { 'background-color': config.backgroundColor,
+                                   'color': config.textColor } ) } );
+                   
+                    songInfo.$els.playButtonText[0].css( {
+                        top: ( ( songInfo.$els.playButton[0].outerHeight( true ) -
+                                 songInfo.$els.playButtonText[0].outerHeight( true ) ) / 2 ) } );
+                }
+
             },
 
-            close: function() {
+            playMusic: function() {
 
-                this.content.fadeOut( { duration: 1000, done: $.proxy( this.navigate, this ) } );
+                var modalView =
+                    new ModalView( {
+                        el: $( 'body' ),
+                        content: $( '<div>supson</div>' ) } );
+
+            },
+            
+            purchaseMusic: function() {
+
             },
 
             navigate: function() {
