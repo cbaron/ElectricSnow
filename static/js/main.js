@@ -18,7 +18,15 @@ requirejs.config( {
             deps: [ 'underscore', 'jquery' ],
             
             exports: 'Backbone'
+        },
+
+        'jquery.jplayer.min': {
+
+            deps: [ 'jquery' ],
+
+            exports: 'jPlayer'
         }
+
 
     }
 

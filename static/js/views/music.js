@@ -1,8 +1,8 @@
 define(
 
-    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'views/modal', 'text!templates/musicPage.html' ],
+    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'views/modal', 'views/song', 'text!templates/musicPage.html' ],
             
-    function( $, undefined, _, Backbone, util, config, ModalView, musicPageTemplate  ) {
+    function( $, undefined, _, Backbone, util, config, ModalView, SongView, musicPageTemplate  ) {
 
         var MusicView = Backbone.View.extend( {
         
@@ -30,7 +30,7 @@ define(
                     var songInfo = this.songs[ i ];
 
                     songInfo.$songContent =
-                        $( _.template( musicPageTemplate, { name: songInfo.name } ) )
+                        $( _.template( musicPageTemplate, { name: songInfo.name, index: i } ) )
                             .appendTo( this.$el );
 
                     songInfo.$els = util.slurpTemplate( songInfo.$songContent );
@@ -47,13 +47,20 @@ define(
 
             },
 
-            playMusic: function() {
+            playMusic: function( e ) {
+
+                var songView =
+                    new SongView( {
+                        file: this.songs[ $( e.currentTarget ).attr( 'data-index' ) ].file } )
 
                 var modalView =
                     new ModalView( {
                         el: $( 'body' ),
-                        content: $( '<div>supson</div>' ) } );
+                        content: songView.$domEls.modalSong[ 0 ],
+                        height: util.windowHeight * .75,
+                        width: util.windowWidth * .75 } );
 
+                songView.listenTo( modalView, 'contentRendered', songView.positionElements );
             },
             
             purchaseMusic: function() {

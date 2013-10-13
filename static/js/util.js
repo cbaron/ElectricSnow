@@ -2,9 +2,9 @@ define( function() {
     
     return { 
 
-        windowWidth: $( window ).innerWidth(),
+        windowWidth: $( window ).width(),
         
-        windowHeight: $( window ).innerHeight(),
+        windowHeight: $( window ).height(),
 
         $document: $( document ),
 

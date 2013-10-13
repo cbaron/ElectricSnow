@@ -31,7 +31,7 @@ define(
                 this.$homeButton =
                     this.$content
                         .find('.homeButton').css( {
-                            'background-color': config.blueColor,
+                            'background-color': config.backgroundColor,
                             'height': ( util.windowHeight / 2 ),
                             'width': ( util.windowWidth / 2 ) } )
                 

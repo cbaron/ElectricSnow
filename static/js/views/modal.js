@@ -83,7 +83,8 @@ define(
 
                 util.$document.on( 'keydown', $.proxy( this.handleKeyPress, this ) );
                 util.$document.on( 'click', $.proxy( this.handleClick, this ) );
-
+                
+                this.trigger( 'contentRendered', this.$els );
             },
 
             closeDialogue: function() {
