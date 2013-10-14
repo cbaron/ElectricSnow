@@ -27,16 +27,23 @@ define(
 
                 this.$els = util.slurpTemplate( this.$modalDialogue );
 
+                this.addContent( this.options );
+                
+                return this;
+            },
+
+            addContent: function( options ) {
+
+                this.options = options;
+
                 this.$els.modalBoxTitle[0].text( ( this.options.title ) ? this.options.title : '' );
 
                 this.$els.modalBoxForm[0].append( this.options.content );
 
                 this.sizeAndPosition();
-
-                return this;
             },
 
-                handleKeyPress: function( e ) {
+            handleKeyPress: function( e ) {
 
                 if( e.keyCode == 27 ) { this.closeDialogue(); }
 
@@ -45,8 +52,7 @@ define(
 
             handleClick: function( e ) {
 
-                if( ( ! util.isMouseOnElement( { x: e.pageX, y: e.pageY, el: this.$els.modalBoxContent[0] } ) ) ) {
-
+                if( ! $.contains( this.$els.modalBoxContent[0].get(0), e.target ) ) {
                     this.closeDialogue();
                 }
             },

@@ -4,6 +4,11 @@ body {
     overflow: hidden;
 }
 
+.clear {
+
+    clear: both;
+}
+
 .homeContainer {
 
     font-size: 3em;
@@ -131,4 +136,34 @@ body {
 }
 
 .jPlayerContainer {
+}
+
+#jp_container_1 {
+
+    position: absolute;
+    color: black;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.jPlayerPlay {
+
+    float: left;
+    cursor: pointer;
+}
+
+.jPlayerPause {
+
+    float: left;
+    cursor: pointer;
+}
+
+.jPlayerSeekContainer {
+
+    float: left;
+    height: 2em;
 }

@@ -49,18 +49,26 @@ define(
 
             playMusic: function( e ) {
 
-                var songView =
-                    new SongView( {
-                        file: this.songs[ $( e.currentTarget ).attr( 'data-index' ) ].file } )
+                var modalOptions = {
+                    el: $( 'body' ),
+                    height: util.windowHeight * .50,
+                    width: util.windowWidth * .75 }
 
-                var modalView =
-                    new ModalView( {
-                        el: $( 'body' ),
-                        content: songView.$domEls.modalSong[ 0 ],
-                        height: util.windowHeight * .75,
-                        width: util.windowWidth * .75 } );
+                if( this.modalView === undefined ) {
 
-                songView.listenTo( modalView, 'contentRendered', songView.positionElements );
+                    this.modalView = new ModalView( modalOptions );
+                
+                } else {
+
+                    this.modalView.addContent( modalOptions );
+                }
+
+                new SongView( {
+                    el: this.modalView.$els.modalBoxForm[0],
+                    file: this.songs[ $( e.currentTarget ).attr( 'data-index' ) ].file,
+                    modalEls: this.modalView.$els
+                } );
+
             },
             
             purchaseMusic: function() {
