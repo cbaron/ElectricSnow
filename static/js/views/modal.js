@@ -40,7 +40,7 @@ define(
 
                 this.$els.modalBoxForm[0].append( this.options.content );
 
-                this.sizeAndPosition();
+                this.sizePositionStyle();
             },
 
             handleKeyPress: function( e ) {
@@ -57,7 +57,8 @@ define(
                 }
             },
 
-            sizeAndPosition: function() {
+            //make this public interface
+            sizePositionStyle: function() {
 
                 this.$els.modalBoxContainer[0].show();
                 var contentHeight = this.$els.modalBoxContent[0].outerHeight( true );
@@ -76,6 +77,8 @@ define(
                     this.$els.modalBoxContent[0].width( this.options.width );
                     contentWidth = this.options.width;
                 }
+
+                this.$els.modalBoxForm[0].css( this.options.containerStyle || { } );
 
                 this.$els.modalBoxContent[0].css( { top: ( ( util.windowHeight - ( contentHeight ) ) / 2 ),
                                                     left: ( ( util.windowWidth - ( contentWidth ) ) / 2 ) } );

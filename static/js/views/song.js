@@ -1,8 +1,8 @@
 define(
 
-    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'jquery.jplayer.min', 'text!templates/songView.html' ],
+    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'jquery.jplayer.min', 'text!templates/songView.html' ],
             
-    function( $, undefined, _, Backbone, util, jPlayer, songViewTemplate  ) {
+    function( $, undefined, _, Backbone, util, config, jPlayer, songViewTemplate  ) {
 
         var SongView = Backbone.View.extend( {
         
@@ -23,10 +23,12 @@ define(
                 
                 this.$domEls =
                     util.slurpTemplate(
-                        $( _.template( songViewTemplate, {} ) )
+                        $( _.template( songViewTemplate, { songName: this.options.name } ) )
                             .appendTo( this.$el ) );
 
                 this.positionElements();
+
+                this.beginAnimation();
             },
 
             positionElements: function() {
@@ -66,6 +68,19 @@ define(
                     left: modalFormPosition.left } );
 
                 this.$domEls.jPlayerSeekContainer[0].width( 200 );
+
+                this.$domEls['jp-play-bar'][0].css( { 'background-color': config.backgroundColor } );
+            },
+
+            beginAnimation: function() {
+
+               setTimeout( $.proxy( this.showNextDialogue, this ), 5000 );
+               setTimeout( $.proxy( this.showNextDialogue, this ), 10000 );
+            },
+
+            showNextDialogue: function() {
+
+                $( this.$el.find('.modalSongDialogue:visible')[0] ).fadeOut( 500, function() { $(this).next().fadeIn( 500 ); } );
             },
 
             handlePlayButtonClick: function() {

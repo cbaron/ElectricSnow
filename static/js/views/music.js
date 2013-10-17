@@ -51,6 +51,7 @@ define(
 
                 var modalOptions = {
                     el: $( 'body' ),
+                    containerStyle: { 'background-color': config.backgroundColor },
                     height: util.windowHeight * .50,
                     width: util.windowWidth * .75 }
 
@@ -66,6 +67,7 @@ define(
                 new SongView( {
                     el: this.modalView.$els.modalBoxForm[0],
                     file: this.songs[ $( e.currentTarget ).attr( 'data-index' ) ].file,
+                    name: this.songs[ $( e.currentTarget ).attr( 'data-index' ) ].name,
                     modalEls: this.modalView.$els
                 } );
 

@@ -167,3 +167,20 @@ ul {
     float: left;
     height: 2em;
 }
+
+.jp-seek-bar, .jp-play-bar {
+
+    height: 100%;
+}
+
+.modalSongTextTitle {
+    text-align: center;
+    font-size: 3em;
+    color: white;
+    padding: .25em;
+}
+
+.modalSongText {
+    color: white;
+    text-align: center;
+}
