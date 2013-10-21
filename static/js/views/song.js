@@ -9,13 +9,26 @@ define(
             events: {
 
                 "click .jPlayerPlay": "handlePlayButtonClick",
-                "click .jPlayerPause": "handlePauseButtonClick"
+                "click .jPlayerPause": "handlePauseButtonClick",
+                "click .songCloseButton": "handleCloseButtonClick"
                 
             },
 
             initialize: function() {
 
                 this.render();
+                
+                this.positionElements();
+
+                this.beginAnimation();
+
+                var _this = this;
+
+                setTimeout(
+                    function() {
+                        _this.$domEls.jPlayerPlay[0].click();
+                    },
+                    250 );
 
             },
 
@@ -25,10 +38,6 @@ define(
                     util.slurpTemplate(
                         $( _.template( songViewTemplate, { songName: this.options.name } ) )
                             .appendTo( this.$el ) );
-
-                this.positionElements();
-
-                this.beginAnimation();
             },
 
             positionElements: function() {
@@ -43,9 +52,8 @@ define(
 
                 closeButton.css( {
                     top: ( modalFormPosition.top +
-                          parseInt( modalForm.css( 'margin-top' ) ) ) -
-                          ( closeButton.outerHeight( true ) / 2 ),
-                    left: modalFormPosition.left + modalForm.outerWidth() - ( closeButton.outerWidth( true ) / 2 ) } );
+                          parseInt( modalForm.css( 'margin-top' ) ) ),
+                    left: modalFormPosition.left + modalForm.outerWidth() - ( closeButton.outerWidth( true ) ) } );
 
                 this.$domEls.jPlayer[0].jPlayer( {
                         
@@ -64,12 +72,22 @@ define(
                 jPlayerControlContainer.css( {
                     top: ( modalFormPosition.top +
                            parseInt( modalForm.css( 'margin-top' ) ) +
-                           modalForm.outerHeight() ) - jPlayerControlContainer.outerHeight(),
-                    left: modalFormPosition.left } );
+                           modalForm.outerHeight() ) - jPlayerControlContainer.outerHeight( true ),
+                    left: this.$domEls.modalSong[0].position().left } );
 
                 this.$domEls.jPlayerSeekContainer[0].width( 200 );
 
-                this.$domEls['jp-play-bar'][0].css( { 'background-color': config.backgroundColor } );
+                this.$domEls['jp-play-bar'][0].css( { 'background-color': config.textColor } );
+                this.$domEls['jp-seek-bar'][0].css( { 'background-color': config.backgroundColor } );
+                
+                this.$domEls['jp-audio'][0].width( this.$domEls.modalSong[0].width() );
+
+                this.$domEls.jPlayerSeekContainer[0]
+                    .height( this.$domEls.jPlayerPlay[0].height() )
+                    .width( this.$domEls[ 'modalSong' ][0].width() -
+                            this.$domEls.jPlayerPlay[0].outerWidth( true ) -
+                            this.$domEls.jPlayerPause[0].outerWidth( true ) );
+
             },
 
             beginAnimation: function() {
@@ -92,6 +110,11 @@ define(
             handlePauseButtonClick: function() {
                 
                 this.$domEls.jPlayer[0].jPlayer( 'pause' );
+            },
+
+            handleCloseButtonClick: function() {
+
+                this.trigger( 'closeClicked' );
             }
 
         } );

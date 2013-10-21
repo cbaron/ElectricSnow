@@ -64,12 +64,15 @@ define(
                     this.modalView.addContent( modalOptions );
                 }
 
-                new SongView( {
-                    el: this.modalView.$els.modalBoxForm[0],
-                    file: this.songs[ $( e.currentTarget ).attr( 'data-index' ) ].file,
-                    name: this.songs[ $( e.currentTarget ).attr( 'data-index' ) ].name,
-                    modalEls: this.modalView.$els
-                } );
+                var songView =
+                    new SongView( {
+                        el: this.modalView.$els.modalBoxForm[0],
+                        file: this.songs[ $( e.currentTarget ).attr( 'data-index' ) ].file,
+                        name: this.songs[ $( e.currentTarget ).attr( 'data-index' ) ].name,
+                        modalEls: this.modalView.$els
+                    } );
+
+                this.modalView.listenTo( songView, 'closeClicked', this.modalView.closeDialogue );
 
             },
             
