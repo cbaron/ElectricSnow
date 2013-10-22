@@ -27,6 +27,11 @@ requirejs.config( {
             exports: 'jPlayer'
         }
 
+        'stripe': {
+
+            exports: 'Stripe'
+        }
+
 
     }
 

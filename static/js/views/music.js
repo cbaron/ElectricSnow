@@ -1,12 +1,18 @@
 define(
 
-    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'views/modal', 'views/song', 'text!templates/musicPage.html' ],
+    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'views/modal', 'views/song', 'views/purchase', 'text!templates/musicPage.html' ],
             
-    function( $, undefined, _, Backbone, util, config, ModalView, SongView, musicPageTemplate  ) {
+    function( $, undefined, _, Backbone, util, config, ModalView, SongView, PurchaseView, musicPageTemplate  ) {
 
         var MusicView = Backbone.View.extend( {
         
             el: $('#pageContainer'),
+
+            this.modalOptions: {
+                el: $( 'body' ),
+                containerStyle: { 'background-color': config.backgroundColor },
+                height: util.windowHeight * .50,
+                width: util.windowWidth * .75 },
 
             events: {
 
@@ -47,22 +53,21 @@ define(
 
             },
 
-            playMusic: function( e ) {
-
-                var modalOptions = {
-                    el: $( 'body' ),
-                    containerStyle: { 'background-color': config.backgroundColor },
-                    height: util.windowHeight * .50,
-                    width: util.windowWidth * .75 }
+            initializeModalDialogue: function() {
 
                 if( this.modalView === undefined ) {
 
-                    this.modalView = new ModalView( modalOptions );
+                    this.modalView = new ModalView( this.modalOptions );
                 
                 } else {
 
-                    this.modalView.addContent( modalOptions );
+                    this.modalView.addContent( this.modalOptions );
                 }
+            },
+
+            playMusic: function( e ) {
+
+                this.initializeModalDialogue(); 
 
                 var songView =
                     new SongView( {
@@ -78,6 +83,17 @@ define(
             
             purchaseMusic: function() {
 
+                this.initializeModalDialogue();
+
+                var purchaseView =
+                    new PurchaseView( {
+                        el: this.modalView.$els.modalBoxForm[0],
+                        modalEls: this.modalView.$els
+                    } );
+
+                this.modalView.listenTo( purchaseView, 'closeClicked', this.modalView.closeDialogue );
+    
+                Stripe.setPublishableKey('pk_test_axWWCrf8PMb5dlAeRzGOuigc');
             },
 
             navigate: function() {
