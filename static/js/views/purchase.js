@@ -31,6 +31,8 @@ define(
             positionElements: function() {
 
                 var closeButton = this.$domEls.songCloseButton[ 0 ];
+                var rootEl = this.$domEls.modalPurchase[ 0 ];
+
                 var modalForm = this.options.modalEls.modalBoxForm[ 0 ];
                 var modalFormPosition = modalForm.position();
 
@@ -38,6 +40,9 @@ define(
                     top: ( modalFormPosition.top +
                           parseInt( modalForm.css( 'margin-top' ) ) ),
                     left: modalFormPosition.left + modalForm.outerWidth() - ( closeButton.outerWidth( true ) ) } );
+
+                rootEl.css( {
+                    top: ( 
             },
  
             handlePayButtonSubmission: function( e ) {

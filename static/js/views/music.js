@@ -18,7 +18,7 @@ define(
 
                 'click .playButton': 'playMusic',
                 
-                'click .purchaseMusic': 'purchaseMusic'
+                'click .purchaseButton': 'purchaseMusic'
             },
 
             initialize: function() {
@@ -83,7 +83,11 @@ define(
             
             purchaseMusic: function() {
 
+                console.log( 'begin' );
+
                 this.initializeModalDialogue();
+
+                console.log( 'initializedModalD' );
 
                 var purchaseView =
                     new PurchaseView( {
@@ -92,8 +96,12 @@ define(
                     } );
 
                 this.modalView.listenTo( purchaseView, 'closeClicked', this.modalView.closeDialogue );
+                
+                console.log( purchaseView );
     
                 Stripe.setPublishableKey('pk_test_axWWCrf8PMb5dlAeRzGOuigc');
+                
+                console.log( 'published key set' );
             },
 
             navigate: function() {
