@@ -25,7 +25,7 @@ requirejs.config( {
             deps: [ 'jquery' ],
 
             exports: 'jPlayer'
-        }
+        },
 
         'stripe': {
 
