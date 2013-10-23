@@ -1,4 +1,4 @@
-define( function() {
+define( ['jquery'], function( $ ) {
     
     return { 
 
@@ -63,4 +63,3 @@ define( function() {
 
     }
 } );
-

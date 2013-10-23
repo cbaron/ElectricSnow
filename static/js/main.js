@@ -30,6 +30,13 @@ requirejs.config( {
         'stripe': {
 
             exports: 'Stripe'
+        },
+
+        'jqueryUI': {
+
+            deps: [ 'jquery' ],
+
+            exports: undefined
         }
 
 

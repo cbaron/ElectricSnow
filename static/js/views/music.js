@@ -8,7 +8,7 @@ define(
         
             el: $('#pageContainer'),
 
-            this.modalOptions: {
+            modalOptions: {
                 el: $( 'body' ),
                 containerStyle: { 'background-color': config.backgroundColor },
                 height: util.windowHeight * .50,
