@@ -2,7 +2,7 @@
 
     <button class="songCloseButton">x</button>
 
-    <div class="inputFields">
+    <div class="purchaseInputFields clearfix">
 
         <form action="" method="POST" id="payment-form" class="paymentForm">
 
@@ -10,12 +10,12 @@
 
                 <li>
                     <label for="name">Name</label>
-                    <input id="name" name="name" type="text" placeholder="First and last name" required autofocus>
+                    <input id="name" name="name" type="text" placeholder="" required autofocus/>
                 </li>
             
                 <li>
                     <label for="email">Email</label>
-                    <input id="email" name="email" type="text" placeholder="email address" required>
+                    <input id="email" name="email" type="text" placeholder="" required/>
                 </li> 
 
                 <span class="payment-errors"></span>
@@ -23,27 +23,27 @@
                 <div class="form-row">
                   <label>
                     <span>Card Number</span>
-                    <input type="text" size="20" data-stripe="number"/>
+                    <input type="text" size="20" data-stripe="number" required/>
                   </label>
                 </div>
 
                 <div class="form-row">
                   <label>
                     <span>CVC</span>
-                    <input type="text" size="4" data-stripe="cvc"/>
+                    <input type="text" size="4" data-stripe="cvc" required/>
                   </label>
                 </div>
 
                 <div class="form-row">
                   <label>
                     <span>Expiration (MM/YYYY)</span>
-                    <input type="text" size="2" data-stripe="exp-month"/>
+                    <input type="text" size="2" data-stripe="exp-month" required/>
                   </label>
                   <span> / </span>
-                  <input type="text" size="4" data-stripe="exp-year"/>
+                  <input type="text" size="4" data-stripe="exp-year" required/>
                 </div>
 
-                <button type="submit">Submit Payment</button>
+                <button class="paymentButton clearfix" type="submit">Submit Payment</button>
 
             </ol>
 

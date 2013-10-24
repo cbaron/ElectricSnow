@@ -17,7 +17,8 @@ define(
                 this.render();
 
                 this.positionElements();
-                
+
+                this.styleElements();
             },
 
             render: function() {
@@ -31,7 +32,8 @@ define(
             positionElements: function() {
 
                 var closeButton = this.$domEls.songCloseButton[ 0 ];
-                var rootEl = this.$domEls.modalPurchase[ 0 ];
+                var inputsDiv = this.$domEls.purchaseInputFields[ 0 ];
+                var paymentButton = this.$domEls.paymentButton[ 0 ];
 
                 var modalForm = this.options.modalEls.modalBoxForm[ 0 ];
                 var modalFormPosition = modalForm.position();
@@ -41,8 +43,17 @@ define(
                           parseInt( modalForm.css( 'margin-top' ) ) ),
                     left: modalFormPosition.left + modalForm.outerWidth() - ( closeButton.outerWidth( true ) ) } );
 
-                rootEl.css( {
-                    top: ( 
+                inputsDiv.css( {
+                    left: ( this.$domEls.modalPurchaseView[0].outerWidth( true ) - inputsDiv.outerWidth( true ) ) / 2 } );
+                
+                paymentButton.css( {
+                    left: ( inputsDiv.outerWidth( true ) - paymentButton.outerWidth( true ) ) / 2 } );
+
+            },
+
+            styleElements: function() {
+
+                this.$domEls.paymentButton[0].css( { 'color': config.backgroundColor } );
             },
  
             handlePayButtonSubmission: function( e ) {

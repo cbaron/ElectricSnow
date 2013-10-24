@@ -1,4 +1,4 @@
-define( ['jquery'], function( $ ) {
+define( ['jquery', 'underscore' ], function( $, _ ) {
     
     return { 
 
@@ -14,37 +14,32 @@ define( ['jquery'], function( $ ) {
                         left: parseInt( ( p.parentEl.outerWidth( true ) - p.el.outerWidth( true ) ) / 2 ) } );
         },
 
+        //TODO: 'data-js' attr
         slurpTemplate: function( $el ) {
 
             var rv = { };
 
-            var rootClass = $.trim( $el.get( 0 ).className );
+            _.each(
+                $.trim( $el.get( 0 ).className ).split(' '),
+                function( singleRootClass ) {
+                    if( singleRootClass !== '' ) {
+                        rv[ singleRootClass ] = [ $el ];
+                    } } );
 
-            if( rootClass !== '' ) {
 
-                rv[ rootClass ] = [ $el ];
-            }
-
-            _.each( $el.find('*'),
-
-                function( el, undefined, undefined ) {
-    
-                    var trimmedClassName = $.trim( el.className );
-
-                    if( trimmedClassName !== '' ) {
-
-                        if( !( 'trimmedClassName' in rv ) ) {
-
-                            rv[ trimmedClassName ] = [ $(el) ];
-
-                        } else {
-                           
-                            rv[ trimmedClassName ].push( $(el) );
-                        }
-                    }
-                }
-            );
-
+            _.each(
+                $el.find('*'),
+                function( descEl ) {
+                    _.each(
+                        $.trim( descEl.className ).split(' '),
+                        function( singleClass ) {
+                            if( singleClass !== '' ) {
+                                if( !( singleClass in rv ) ) {
+                                    rv[ singleClass ] = [ $(descEl) ];
+                                } else {
+                                    rv[ singleClass ].push( $(descEl) );
+                                }
+                            } } ) } );
             return rv;
         },
 

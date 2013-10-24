@@ -17,6 +17,11 @@ body {
     clear: both;
 }
 
+ol {
+
+    list-style-type: none;
+}
+
 .homeContainer {
 
     font-size: 3em;
@@ -145,6 +150,8 @@ body {
     color: white;
 
     cursor: pointer;
+
+    background-color: transparent;
 }
 
 .jPlayerContainer {
@@ -213,4 +220,38 @@ ul {
 .modalSongText {
     color: white;
     text-align: center;
+}
+
+.purchaseInputFields {
+
+    float: left;
+    position: relative;
+}
+
+.modalPurchaseView {
+
+    width: 100%;
+    height: 100%;
+}
+
+.paymentForm {
+
+    color: white;
+}
+
+.paymentForm li {
+
+    margin: .5em 0em;
+}
+
+.paymentButton {
+
+    margin-top: 3em;
+    padding: .5em;
+    border-radius: 1em;
+    background-color: white;
+    border: 2px outset;
+    float: left;
+    position: relative;
+    cursor: pointer;
 }
