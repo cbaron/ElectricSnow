@@ -1,8 +1,29 @@
 define(
 
-    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'views/modal', 'views/song', 'views/purchase', 'text!templates/musicPage.html' ],
+    [ 'jquery',
+      'jqueryUI',
+      'underscore',
+      'backbone',
+      'util',
+      'config',
+      'views/modal',
+      'views/song',
+      'views/purchase',
+      'text!templates/musicPage.html',
+      'text!templates/domainText.html',
+    ],
             
-    function( $, undefined, _, Backbone, util, config, ModalView, SongView, PurchaseView, musicPageTemplate  ) {
+    function( $,
+              undefined,
+              _,
+              Backbone,
+              util,
+              config,
+              ModalView,
+              SongView,
+              PurchaseView,
+              musicPageTemplate,
+              domainTextTemplate ) {
 
         var MusicView = Backbone.View.extend( {
         
@@ -102,6 +123,14 @@ define(
 
                 this.options.appRouter.navigate( 'music', { trigger: true } ); 
 
+            },
+
+            toggle: function() {
+                
+                for( var i = 0, ii = this.songs.length; i < ii; i++ ) {
+
+                    this.songs[ i ].$els.songContainer[0].toggle();
+                }
             }
 
         } );

@@ -94,6 +94,7 @@ define(
 
                setTimeout( $.proxy( this.showNextDialogue, this ), 5000 );
                setTimeout( $.proxy( this.showNextDialogue, this ), 10000 );
+               setTimeout( $.proxy( this.showNextDialogue, this ), 15000 );
             },
 
             showNextDialogue: function() {

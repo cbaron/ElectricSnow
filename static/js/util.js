@@ -19,27 +19,23 @@ define( ['jquery', 'underscore' ], function( $, _ ) {
 
             var rv = { };
 
-            _.each(
-                $.trim( $el.get( 0 ).className ).split(' '),
-                function( singleRootClass ) {
-                    if( singleRootClass !== '' ) {
-                        rv[ singleRootClass ] = [ $el ];
-                    } } );
+            var addToRv =
+                function( singleClass ) {
+                    if( singleClass !== '' ) {
+                        if( !( singleClass in rv ) ) {
+                            rv[ singleClass ] = [ this ];
+                        } else {
+                            rv[ singleClass ].push( this );
+                        }
+                    } };
 
+            _.each( $.trim( $el.get( 0 ).className ).split(' '), addToRv, $el );
 
             _.each(
-                $el.find('*'),
-                function( descEl ) {
-                    _.each(
-                        $.trim( descEl.className ).split(' '),
-                        function( singleClass ) {
-                            if( singleClass !== '' ) {
-                                if( !( singleClass in rv ) ) {
-                                    rv[ singleClass ] = [ $(descEl) ];
-                                } else {
-                                    rv[ singleClass ].push( $(descEl) );
-                                }
-                            } } ) } );
+                jQuery.makeArray( $el.siblings() ).concat( jQuery.makeArray( $el.find('*') ) ),
+                function( anotherEl ) {
+                    _.each( $.trim( anotherEl.className ).split(' '), addToRv, $( anotherEl ) ) } );
+
             return rv;
         },
 

@@ -22,9 +22,9 @@ ol {
     list-style-type: none;
 }
 
-.homeContainer {
+.faded {
 
-    font-size: 3em;
+    opacity: 0.5;
 }
 
 .homeButton {
@@ -39,14 +39,15 @@ ol {
     color: white;
     position: relative;
     float: left;
+    font-size: 3em;
 }
 
-.homeDomain {
+.domainText {
 
     text-align: center;
     background-color: white;
     position: absolute;
-
+    font-size: 3em;
 }
 
 .songContainer {
@@ -74,7 +75,11 @@ ol {
     cursor: pointer;
     float: left;
     width: 8em;
-    padding: .25em;
+    padding: .5em;
+    
+    -webkit-border-radius: 10px; 
+    -moz-border-radius: 10px; 
+    border-radius: 10px;
 }
 
 .purchaseLabel {

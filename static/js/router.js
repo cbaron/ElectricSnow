@@ -1,8 +1,8 @@
 define(
 
-    [ 'jquery', 'underscore', 'backbone', 'views/home', 'views/music' ],
+    [ 'jquery', 'underscore', 'backbone', 'views/homeButton', 'views/domainText', 'views/music' ],
 
-    function( $, _, Backbone, HomeView, MusicView ) {
+    function( $, _, Backbone, HomeButtonView, DomainTextView, MusicView ) {
       
         var AppRouter = Backbone.Router.extend( {
 
@@ -16,13 +16,31 @@ define(
             },
 
             musicRoute: function() {
+                
+                if( 'musicView' in this ) {
+                    
+                    this.musicView.toggle();
 
-                new MusicView( { appRouter: this } );
+                } else {
+
+                    this.musicView = new MusicView( { appRouter: this } );
+                }
+                
+                if( !( 'domainTextView' in this ) ) {
+                
+                    this.domainTextView = new DomainTextView();
+                }
             },
 
             defaultRoute: function() {
+
+                if( 'musicView' in this ) {
+
+                    this.musicView.toggle();
+                }
                 
-                new HomeView( { appRouter: this } );
+                this.homeButtonView = new HomeButtonView( { appRouter: this } );
+                this.domainTextView = new DomainTextView();
             },
 
         } );
