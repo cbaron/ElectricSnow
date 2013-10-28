@@ -1,8 +1,8 @@
 define(
 
-    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'jquery.jplayer.min', 'text!templates/songView.html' ],
+    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'jquery.jplayer.min', 'snowfall.jquery', 'text!templates/songView.html' ],
             
-    function( $, undefined, _, Backbone, util, config, jPlayer, songViewTemplate  ) {
+    function( $, undefined, _, Backbone, util, config, jPlayer, undefined, songViewTemplate  ) {
 
         var SongView = Backbone.View.extend( {
         
@@ -99,7 +99,15 @@ define(
 
             showNextDialogue: function() {
 
-                $( this.$el.find('.modalSongDialogue:visible')[0] ).fadeOut( 500, function() { $(this).next().fadeIn( 500 ); } );
+                $( this.$el.find('.modalSongDialogue:visible')[0] )
+                    .fadeOut( 500, function()
+                        { var next = $(this).next();
+                          next.fadeIn( 500 );
+                          if( next.hasClass('snow') ) {
+                              $('.modalBoxForm').snowfall();
+                          } else if( $( this ).hasClass('snow') ) {
+                              $('.modalBoxForm').snowfall( 'clear' );
+                          } } );
             },
 
             handlePlayButtonClick: function() {

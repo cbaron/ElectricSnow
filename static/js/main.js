@@ -37,6 +37,12 @@ requirejs.config( {
             deps: [ 'jquery' ],
 
             exports: undefined
+        },
+
+        'snowfall.jquery': {
+
+            deps: [ 'jquery' ],
+            exports: undefined
         }
 
 
