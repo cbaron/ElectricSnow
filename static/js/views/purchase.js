@@ -27,6 +27,8 @@ define(
                     util.slurpTemplate(
                         $( _.template( purchaseViewTemplate, { } ) )
                             .appendTo( this.$el ) );
+
+                Stripe.setPublishableKey('pk_test_axWWCrf8PMb5dlAeRzGOuigc');
             },
 
             positionElements: function() {
