@@ -21,15 +21,6 @@ define(
                 this.positionElements();
 
                 this.beginAnimation();
-
-                var _this = this;
-
-                setTimeout(
-                    function() {
-                        _this.$domEls.jPlayerPlay[0].click();
-                    },
-                    250 );
-
             },
 
             render: function() {
@@ -99,11 +90,14 @@ define(
 
             showNextDialogue: function() {
 
+                var _this = this;
+
                 $( this.$el.find('.modalSongDialogue:visible')[0] )
                     .fadeOut( 500, function()
                         { var next = $(this).next();
                           next.fadeIn( 500 );
                           if( next.hasClass('snow') ) {
+                              _this.$domEls.jPlayerPlay[0].click();
                               $('.modalBoxForm').snowfall();
                           } else if( $( this ).hasClass('snow') ) {
                               $('.modalBoxForm').snowfall( 'clear' );
