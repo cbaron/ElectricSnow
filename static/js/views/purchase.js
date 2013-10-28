@@ -69,7 +69,7 @@ define(
                 return false;
             },
 
-            stripeResponsehandler: function( status, response ) {
+            stripeResponseHandler: function( status, response ) {
                
                 var $payForm = this.$domEls.paymentForm[0];
 
