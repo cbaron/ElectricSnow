@@ -40,8 +40,8 @@ define(
                 var $homeButton =
                     this.$domEls.homeButton[0].css( {
                     'background-color': config.backgroundColor,
-                    'height': ( util.windowHeight / 2 ),
-                    'width': ( util.windowWidth / 2 ) } )
+                    'height': ( util.windowHeight / 3 ),
+                    'width': ( util.windowWidth / 3 ) } )
                 
                 $homeButton.css( {
                     top: ( ( util.windowHeight - $homeButton.outerHeight( true ) ) / 3 ),

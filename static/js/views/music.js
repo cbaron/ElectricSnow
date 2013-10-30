@@ -10,6 +10,7 @@ define(
       'views/song',
       'views/purchase',
       'text!templates/musicPage.html',
+      'text!templates/songDialogue.html',
       'text!templates/domainText.html',
     ],
             
@@ -23,6 +24,7 @@ define(
               SongView,
               PurchaseView,
               musicPageTemplate,
+              songDialogueTemplate,
               domainTextTemplate ) {
 
         var MusicView = Backbone.View.extend( {
@@ -51,14 +53,16 @@ define(
             },
 
             render: function() {
+               
+                this.musicSection = $( _.template( musicPageTemplate, { } ) ).appendTo( this.$el );
 
                 for( var i = 0, ii = this.songs.length; i < ii; i++ ) {
 
                     var songInfo = this.songs[ i ];
 
                     songInfo.$songContent =
-                        $( _.template( musicPageTemplate, { name: songInfo.name, index: i } ) )
-                            .appendTo( this.$el );
+                        $( _.template( songDialogueTemplate, { name: songInfo.name, index: i } ) )
+                            .appendTo( this.musicSection );
 
                     songInfo.$els = util.slurpTemplate( songInfo.$songContent );
 

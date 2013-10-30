@@ -45,6 +45,15 @@ define(
                     top: ( modalFormPosition.top +
                           parseInt( modalForm.css( 'margin-top' ) ) ),
                     left: modalFormPosition.left + modalForm.outerWidth() - ( closeButton.outerWidth( true ) ) } );
+               
+                for( var i = 0, ii = this.$domEls.modalSongDialogue.length; i < ii; i++ ) {
+ 
+                    util.centerEl( {
+                        el: this.$domEls.modalSongDialogue[ i ],
+                        parentEl: modalForm } );
+
+                    if( i !== 0 ) { this.$domEls.modalSongDialogue[ i ].hide(); }
+                }
 
                 this.$domEls.jPlayer[0].jPlayer( {
                         

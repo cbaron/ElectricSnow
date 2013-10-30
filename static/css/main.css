@@ -47,7 +47,7 @@ ol {
     text-align: center;
     background-color: white;
     position: absolute;
-    font-size: 3em;
+    font-size: 5em;
 }
 
 .songContainer {
@@ -142,20 +142,13 @@ ol {
 .songCloseButton {
     
     position: absolute;
-
     -moz-border-radius: 2em;
     border-radius: 2em;
-
     font-size: .75em;
-
     border: 1px solid white;
-
     padding: 0em .5em 0em .5em;
-
     color: white;
-
     cursor: pointer;
-
     background-color: transparent;
 }
 
@@ -227,6 +220,11 @@ ul {
     text-align: center;
 }
 
+.modalSongDialogue {
+
+    position: absolute;
+}
+
 .purchaseInputFields {
 
     float: left;
@@ -259,4 +257,9 @@ ul {
     float: left;
     position: relative;
     cursor: pointer;
+}
+
+.musicSection {
+
+    padding: 2em 0em 0em 2em;
 }
