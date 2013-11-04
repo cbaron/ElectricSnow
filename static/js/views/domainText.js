@@ -1,15 +1,16 @@
 define(
 
     [ 'jquery',
-      'jqueryUI',
       'underscore',
       'backbone',
       'util',
       'config',
-      'text!templates/domainText.html'
+      'text!templates/domainText.html',
+      'css!styles/domainText',
+      'jqueryUI',
     ],
             
-    function( $, undefined, _, Backbone, util, config, domainTextTemplate ) {
+    function( $, _, Backbone, util, config, domainTextTemplate ) {
 
         var DomainTextView = Backbone.View.extend( {
         
@@ -24,15 +25,15 @@ define(
 
             render: function() {
 
-                this.$domEls =
+                this.templateData =
                     util.slurpTemplate(
-                        $( _.template( domainTextTemplate, {} ) ).appendTo( this.$el ) );
+                        _.template( domainTextTemplate, {} ) );
 
-                var $domainText = this.$domEls.domainText[0];
+                this.$el.append( this.templateData.$template );
 
-                $domainText.css( {
+                this.templateData.parts.domainText.css( {
                     'color': config.backgroundColor,
-                    'left': ( ( util.windowWidth - $domainText.outerWidth( true ) ) / 2 ),
+                    'left': ( ( util.windowWidth - this.templateData.parts.domainText.outerWidth( true ) ) / 2 ),
                     'top': util.windowHeight * .75 } );
             }
 

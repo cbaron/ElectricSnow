@@ -1,10 +1,10 @@
-<section class="modalPurchaseView">
+<section class="modalPurchaseView" data-js="container">
 
-    <button class="songCloseButton">x</button>
+    <button class="closeButton" data-js="closeButton">x</button>
 
-    <div class="purchaseInputFields clearfix">
+    <div class="purchaseInputFields clearfix" data-js="inputContainer">
 
-        <form action="/cgiBin/processPayment.py" method="POST" id="payment-form" class="paymentForm">
+        <form action="/cgiBin/processPayment.py" method="POST" id="payment-form" class="paymentForm" data-js="paymentForm">
 
             <ol>
 
@@ -43,7 +43,7 @@
                   <input type="text" size="4" data-stripe="exp-year" required/>
                 </div>
 
-                <button class="paymentButton clearfix" type="submit">Submit Payment</button>
+                <button class="paymentButton clearfix" type="submit" data-js="paymentButton">Submit Payment</button>
 
             </ol>
 

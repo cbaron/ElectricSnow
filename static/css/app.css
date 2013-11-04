@@ -1,0 +1,38 @@
+body {
+    margin: 0px;
+    overflow: hidden;
+}
+
+ol {
+    list-style-type: none;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.clearfix:after {
+    clear: both;
+    display: block;
+    content: " ";
+    height: 0px;
+    visibility: hidden;
+}
+
+.clearfix {
+    display: inline-block;
+}
+
+.closeButton {
+    position: absolute;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+    font-size: .75em;
+    border: 1px solid white;
+    padding: 0em .5em 0em .5em;
+    color: white;
+    cursor: pointer;
+    background-color: transparent;
+}

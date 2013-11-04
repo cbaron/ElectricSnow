@@ -1,6 +1,14 @@
 define(
 
-    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'text!templates/modalBox.html' ],
+    [ 'jquery',
+      'jqueryUI',
+      'underscore',
+      'backbone',
+      'util',
+      'config',
+      'text!templates/modalBox.html',
+      'css!styles/modal'
+     ],
             
     function( $, undefined, _, Backbone, util, config, modalBoxTemplate ) {
 
@@ -21,11 +29,9 @@ define(
 
             render: function() {
 
-                this.$modalDialogue =
-                    $( _.template( modalBoxTemplate, { } ) )
-                        .appendTo( $( 'body' ) );
-
-                this.$els = util.slurpTemplate( this.$modalDialogue );
+                this.templateData = util.slurpTemplate( _.template( modalBoxTemplate, { } ) );
+                
+                $('body').append( this.templateData.$template );
 
                 this.addContent( this.options );
                 
@@ -36,9 +42,9 @@ define(
 
                 this.options = options;
 
-                this.$els.modalBoxTitle[0].text( ( this.options.title ) ? this.options.title : '' );
+                this.templateData.parts.title.text( ( this.options.title ) ? this.options.title : '' );
 
-                this.$els.modalBoxForm[0].append( this.options.content );
+                this.templateData.parts.form.append( this.options.content );
 
                 this.sizePositionStyle();
             },
@@ -52,7 +58,7 @@ define(
 
             handleClick: function( e ) {
 
-                if( ! $.contains( this.$els.modalBoxContent[0].get(0), e.target ) ) {
+                if( ! $.contains( this.templateData.parts.content.get(0), e.target ) ) {
                     this.closeDialogue();
                 }
             },
@@ -60,47 +66,51 @@ define(
             //make this public interface
             sizePositionStyle: function() {
 
-                this.$els.modalBoxContainer[0].show();
-                var contentHeight = this.$els.modalBoxContent[0].outerHeight( true );
-                var contentWidth = this.$els.modalBoxContent[0].outerWidth( true );
-                this.$els.modalBoxContainer[0].hide();
+                var parts = this.templateData.parts;
+
+                parts.container.show();
+                var contentHeight = parts.content.outerHeight( true );
+                var contentWidth = parts.content.outerWidth( true );
+                parts.container.hide();
 
                 if( this.options.height ) {
 
-                    this.$els.modalBoxContent[0].height( this.options.height );
+                    parts.content.height( this.options.height );
                     contentHeight = this.options.height;
-                    this.$els.modalBoxForm[0].height( contentHeight - this.$els.modalBoxTitle[0].outerHeight( true ) );
+                    parts.form.height( contentHeight - parts.title.outerHeight( true ) );
                 }
 
                 if( this.options.width ) {
 
-                    this.$els.modalBoxContent[0].width( this.options.width );
+                    parts.content.width( this.options.width );
                     contentWidth = this.options.width;
                 }
 
-                this.$els.modalBoxForm[0].css( this.options.containerStyle || { } );
+                parts.form.css( this.options.containerStyle || { } );
 
-                this.$els.modalBoxContent[0].css( { top: ( ( util.windowHeight - ( contentHeight ) ) / 2 ),
-                                                    left: ( ( util.windowWidth - ( contentWidth ) ) / 2 ) } );
+                parts.content.css( { top: ( ( util.windowHeight - ( contentHeight ) ) / 2 ),
+                                             left: ( ( util.windowWidth - ( contentWidth ) ) / 2 ) } );
 
-                this.$els.modalBoxContainer[0].show( 'slow', $.proxy( this.afterShow, this ) );
+                parts.container.show( 'slow', $.proxy( this.afterShow, this ) );
             },
 
             afterShow: function() {
 
-                $( this.$els.modalBoxContainer[0].find('input')[0] ).focus();
+                $( this.templateData.parts.container.find('input')[0] ).focus();
 
                 util.$document.on( 'keydown', $.proxy( this.handleKeyPress, this ) );
                 util.$document.on( 'click', $.proxy( this.handleClick, this ) );
                 
-                this.trigger( 'contentRendered', this.$els );
+                this.trigger( 'contentRendered', this.templateData.parts );
             },
 
             closeDialogue: function() {
 
-                this.$els.modalBoxTitle[0].text('');
-                this.$els.modalBoxForm[0].empty();
-                this.$els.modalBoxContainer[0].hide();
+                var parts = this.templateData.parts;
+
+                parts.title.text('');
+                parts.form.empty();
+                parts.container.hide();
 
                 util.$document.off( 'keydown', this.handleKeyPress );
                 util.$document.off( 'click', this.handleClick );

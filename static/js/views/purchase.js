@@ -1,6 +1,16 @@
 define(
 
-    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'stripe', 'text!templates/purchaseView.html' ],
+    [
+        'jquery',
+        'jqueryUI',
+        'underscore',
+        'backbone',
+        'util',
+        'config',
+        'stripe',
+        'text!templates/purchaseView.html',
+        'css!styles/purchase'
+    ],
             
     function( $, undefined, _, Backbone, util, config, Stripe, purchaseViewTemplate  ) {
 
@@ -8,8 +18,8 @@ define(
         
             events: {
 
-                "submit #payment-form": "handlePayButtonSubmission"
-                
+                "submit #payment-form": "handlePayButtonSubmission",
+                "click .closeButton": "handleCloseButtonClick"
             },
 
             initialize: function() {
@@ -23,47 +33,45 @@ define(
 
             render: function() {
                 
-                this.$domEls =
-                    util.slurpTemplate(
-                        $( _.template( purchaseViewTemplate, { } ) )
-                            .appendTo( this.$el ) );
+                this.templateData =
+                    util.slurpTemplate( _.template( purchaseViewTemplate, { } ) );
+
+                this.$el.append( this.templateData.$template );
 
                 Stripe.setPublishableKey('pk_test_axWWCrf8PMb5dlAeRzGOuigc');
             },
 
             positionElements: function() {
 
-                var closeButton = this.$domEls.songCloseButton[ 0 ];
-                var inputsDiv = this.$domEls.purchaseInputFields[ 0 ];
-                var paymentButton = this.$domEls.paymentButton[ 0 ];
+                var parts = this.templateData.parts;
 
-                var modalForm = this.options.modalEls.modalBoxForm[ 0 ];
+                var modalForm = this.options.modalEls.form;
                 var modalFormPosition = modalForm.position();
 
-                closeButton.css( {
+                parts.closeButton.css( {
                     top: ( modalFormPosition.top +
                           parseInt( modalForm.css( 'margin-top' ) ) ),
-                    left: modalFormPosition.left + modalForm.outerWidth() - ( closeButton.outerWidth( true ) ) } );
+                    left: modalFormPosition.left + modalForm.outerWidth() - ( parts.closeButton.outerWidth( true ) ) } );
 
-                inputsDiv.css( {
-                    left: ( this.$domEls.modalPurchaseView[0].outerWidth( true ) - inputsDiv.outerWidth( true ) ) / 2 } );
+                parts.inputContainer.css( {
+                    left: ( parts.container.outerWidth( true ) - parts.inputContainer.outerWidth( true ) ) / 2 } );
                 
-                paymentButton.css( {
-                    left: ( inputsDiv.outerWidth( true ) - paymentButton.outerWidth( true ) ) / 2 } );
+                parts.paymentButton.css( {
+                    left: ( parts.inputContainer.outerWidth( true ) - parts.paymentButton.outerWidth( true ) ) / 2 } );
 
             },
 
             styleElements: function() {
 
-                this.$domEls.paymentButton[0].css( { 'color': config.backgroundColor } );
+                this.templateData.parts.paymentButton.css( { 'color': config.backgroundColor } );
             },
  
             handlePayButtonSubmission: function( e ) {
         
                 // Disable the submit button to prevent repeated clicks
-                this.$domEls.paymentForm[0].find('button').prop( 'disabled', true );
+                parts.paymentForm.find('button').prop( 'disabled', true );
 
-                Stripe.card.createToken( this.$domEls.paymentForm[0], $.proxy( this.stripeResponseHandler, this ) );
+                Stripe.card.createToken( parts.paymentForm, $.proxy( this.stripeResponseHandler, this ) );
 
                 // Prevent the form from submitting with the default action
                 return false;
@@ -71,7 +79,7 @@ define(
 
             stripeResponseHandler: function( status, response ) {
                
-                var $payForm = this.$domEls.paymentForm[0];
+                var $payForm = parts.paymentForm;
 
                 if( response.error ) {
 

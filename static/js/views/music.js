@@ -1,7 +1,6 @@
 define(
 
     [ 'jquery',
-      'jqueryUI',
       'underscore',
       'backbone',
       'util',
@@ -11,11 +10,12 @@ define(
       'views/purchase',
       'text!templates/musicPage.html',
       'text!templates/songDialogue.html',
-      'text!templates/domainText.html',
+      'jqueryUI',
+      'css!styles/musicPage',
+      'css!styles/songDialogue'
     ],
             
     function( $,
-              undefined,
               _,
               Backbone,
               util,
@@ -24,8 +24,7 @@ define(
               SongView,
               PurchaseView,
               musicPageTemplate,
-              songDialogueTemplate,
-              domainTextTemplate ) {
+              songDialogueTemplate ) {
 
         var MusicView = Backbone.View.extend( {
         
@@ -53,27 +52,28 @@ define(
             },
 
             render: function() {
-               
+              
                 this.musicSection = $( _.template( musicPageTemplate, { } ) ).appendTo( this.$el );
 
                 for( var i = 0, ii = this.songs.length; i < ii; i++ ) {
 
                     var songInfo = this.songs[ i ];
 
-                    songInfo.$songContent =
-                        $( _.template( songDialogueTemplate, { name: songInfo.name, index: i } ) )
-                            .appendTo( this.musicSection );
+                    songInfo.templateData =
+                        util.slurpTemplate(
+                            _.template( songDialogueTemplate, { name: songInfo.name, index: i } ) );
 
-                    songInfo.$els = util.slurpTemplate( songInfo.$songContent );
+                    this.musicSection.append( songInfo.templateData.$template );
 
-                    _.each( songInfo.$els.playButton.concat( songInfo.$els.purchaseButton ),
-                            function( $el, undefined, undefined ) {
+                    _.each( [ songInfo.templateData.parts.playButton,
+                              songInfo.templateData.parts.purchaseButton ],
+                            function( $el ) {
                                 $el.css( { 'background-color': config.backgroundColor,
                                    'color': config.textColor } ) } );
                    
-                    songInfo.$els.playButtonText[0].css( {
-                        top: ( ( songInfo.$els.playButton[0].outerHeight( true ) -
-                                 songInfo.$els.playButtonText[0].outerHeight( true ) ) / 2 ) } );
+                    songInfo.templateData.parts.playButtonText.css( {
+                        top: ( ( songInfo.templateData.parts.playButton.outerHeight( true ) -
+                                 songInfo.templateData.parts.playButtonText.outerHeight( true ) ) / 2 ) } );
                 }
 
             },
@@ -96,14 +96,13 @@ define(
 
                 var songView =
                     new SongView( {
-                        el: this.modalView.$els.modalBoxForm[0],
+                        el: this.modalView.templateData.parts.form,
                         file: this.songs[ $( e.currentTarget ).attr( 'data-index' ) ].file,
                         name: this.songs[ $( e.currentTarget ).attr( 'data-index' ) ].name,
-                        modalEls: this.modalView.$els
+                        modalEls: this.modalView.templateData.parts
                     } );
 
                 this.modalView.listenTo( songView, 'closeClicked', this.modalView.closeDialogue );
-
             },
             
             purchaseMusic: function() {
@@ -112,8 +111,8 @@ define(
 
                 var purchaseView =
                     new PurchaseView( {
-                        el: this.modalView.$els.modalBoxForm[0],
-                        modalEls: this.modalView.$els
+                        el: this.modalView.templateData.parts.form,
+                        modalEls: this.modalView.templateData.parts
                     } );
 
                 this.modalView.listenTo( purchaseView, 'closeClicked', this.modalView.closeDialogue );
@@ -133,7 +132,7 @@ define(
                 
                 for( var i = 0, ii = this.songs.length; i < ii; i++ ) {
 
-                    this.songs[ i ].$els.songContainer[0].toggle();
+                    this.songs[ i ].templateData.parts.songContainer.toggle();
                 }
             }
 

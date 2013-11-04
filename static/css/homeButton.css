@@ -1,0 +1,13 @@
+.homeButton {
+    position: relative;
+    float: left;
+    cursor: pointer;
+}
+
+.homeButtonText {
+
+    color: white;
+    position: relative;
+    float: left;
+    font-size: 3em;
+}

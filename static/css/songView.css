@@ -1,0 +1,43 @@
+.faded {
+    opacity: 0.5;
+}
+
+#jp_container_1 {
+    position: absolute;
+    color: black;
+}
+
+.jPlayerPlay {
+    float: left;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    margin: .25em;
+    color: white;
+}
+
+.jPlayerPause {
+    float: left;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    margin: .25em;
+    color: white;
+}
+
+.jPlayerSeekContainer {
+    float: left;
+    margin: .25em 0em .25em 0em;
+}
+
+.jp-seek-bar {
+    border: 1px solid black;
+}
+
+.jp-play-bar {
+    background-color: white;
+}
+
+.jp-seek-bar, .jp-play-bar {
+    height: 100%;
+}

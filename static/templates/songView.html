@@ -1,40 +1,37 @@
-<div class="modalSong">
+<div class="modalSong" data-js="container">
 
-    <div class="songCloseButton">x</div>
+    <div class="closeButton" data-js="closeButton">x</div>
 
-    <div class="modalSongDialogue">
+    <div class="modalSongDialogue" data-js="textContent">
         <div class="modalSongTextTitle">ElectricSnow.com</div>
         <div class="modalSongText">presents</div>
     </div>
     
-    <div class="modalSongDialogue">
+    <div class="modalSongDialogue" data-js="textContent">
         <div class="modalSongTextTitle">{{songName}}</div>
     </div>
     
-    <div class="modalSongDialogue snow">
+    <div class="modalSongDialogue snow" data-js="textContent">
         <div class="modalSongText">Brought to you by</div>
         <div class="modalSongTextTitle">Orland Primary Care Specialist</div>
     </div>
 
-    <div class="modalSongDialogue">
+    <div class="modalSongDialogue" data-js="textContent">
         <div class="modalSongTextTitle faded">ElectricSnow.com</div>
     </div>
 
+    <div id="jPlayer" class="jPlayer" data-js="jPlayer"></div>
 
-    <div id="jPlayer" class="jPlayer"></div>
+        <div id="jp_container_1" class="jp-audio" data-js="jPlayerControlContainer">
 
-        <div id="jp_container_1" class="jp-audio">
+            <div class="jPlayerPlay" data-js="playButton">&gt;</div>
+            <div class="jPlayerPause" data-js="pauseButton">||</div>
 
-            <div class="jPlayerPlay">&gt;</div>
-            <div class="jPlayerPause">||</div>
-
-            <div class="jPlayerSeekContainer">
-                <div class="jp-seek-bar">
-                    <div class="jp-play-bar"></div>
+            <div class="jPlayerSeekContainer clearfix" data-js="seekContainer">
+                <div class="jp-seek-bar" data-js="seekBar">
+                    <div class="jp-play-bar" data-js="playBar"></div>
                 </div>
             </div>
-
-            <div class="clear"></div>
 
             <div class="jp-no-solution">
                 <span>Update Required</span>

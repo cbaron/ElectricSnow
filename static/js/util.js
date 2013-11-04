@@ -14,29 +14,50 @@ define( ['jquery', 'underscore' ], function( $, _ ) {
                         left: parseInt( ( p.parentEl.outerWidth( true ) - p.el.outerWidth( true ) ) / 2 ) } );
         },
 
-        //TODO: 'data-js' attr
-        slurpTemplate: function( $el ) {
+        slurpTemplate: function( template ) {
 
-            var rv = { };
+           var $template = $( template );
 
-            var addToRv =
-                function( singleClass ) {
-                    if( singleClass !== '' ) {
-                        if( !( singleClass in rv ) ) {
-                            rv[ singleClass ] = [ this ];
-                        } else {
-                            rv[ singleClass ].push( this );
-                        }
-                    } };
+           var $dataJsElements = _.filter( $template, function( element ) { return $( element ).is( '[data-js]'); } ),
+               parts = { }
 
-            _.each( $.trim( $el.get( 0 ).className ).split(' '), addToRv, $el );
+           _.each( $template.get(),
+                   function( element ) {
+                       var dataJsDescendants = $( element ).find( '*[data-js]' );
+                       if( dataJsDescendants.length ) {
+                           $dataJsElements = $dataJsElements.concat( dataJsDescendants.get() )
+                       }
+                   }
+                 );
 
-            _.each(
-                jQuery.makeArray( $el.siblings() ).concat( jQuery.makeArray( $el.find('*') ) ),
-                function( anotherEl ) {
-                    _.each( $.trim( anotherEl.className ).split(' '), addToRv, $( anotherEl ) ) } );
+            _.each( $dataJsElements,
 
-            return rv;
+                function( element ) {
+
+                    var $element = $( element );
+
+                    var dataJs = $element.attr( 'data-js' );
+                    $element.removeAttr( 'data-js' );
+
+                    if( !( dataJs in parts ) ) {
+
+                        parts[ dataJs ] = $element;
+
+                    } else if( Array.isArray( parts[ dataJs ] ) ) {
+
+                        parts[ dataJs ].push( $element );
+
+                    } else {
+
+                        parts[ dataJs ] = [ parts[ dataJs ], $(element) ];
+                    }
+                }
+            );
+
+            return {
+                $template: $template,
+                parts: parts
+            }
         },
 
         isMouseOnElement: function( p ) {

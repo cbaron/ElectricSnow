@@ -1,0 +1,35 @@
+.songContainer {
+    padding: 2em;
+}
+
+.playButton {
+    text-align: center;
+    cursor: pointer;
+    height: 3em;
+    float: left;
+    margin-right: 2em;
+    margin-bottom: .25em;
+    width: 6em;
+}
+
+.playButtonText {
+    position: relative;
+}
+
+.purchaseButton {
+    cursor: pointer;
+    float: left;
+    width: 8em;
+    padding: .5em;
+    -webkit-border-radius: 10px; 
+    -moz-border-radius: 10px; 
+    border-radius: 10px;
+}
+
+.purchaseLabel {
+    float: left;
+}
+
+.costLabel {
+    float: right;
+}

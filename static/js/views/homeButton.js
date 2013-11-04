@@ -1,15 +1,16 @@
 define(
 
     [ 'jquery',
-      'jqueryUI',
       'underscore',
       'backbone',
       'util',
       'config',
-      'text!templates/homeButton.html'
+      'text!templates/homeButton.html',
+      'css!styles/homeButton',
+      'jqueryUI'
     ],
             
-    function( $, undefined, _, Backbone, util, config, homeButtonTemplate ) {
+    function( $, _, Backbone, util, config, homeButtonTemplate ) {
 
         var HomeButtonView = Backbone.View.extend( {
         
@@ -33,22 +34,24 @@ define(
                     .height( util.windowHeight )
                     .width( util.windowWidth );
 
-                this.$domEls =
+                this.templateData =
                     util.slurpTemplate(
-                        $( _.template( homeButtonTemplate, {} ) ).appendTo( this.$el ) );
-                
+                        _.template( homeButtonTemplate, {} ) );
+                        
+                this.$el.append( this.templateData.$template );
+
                 var $homeButton =
-                    this.$domEls.homeButton[0].css( {
-                    'background-color': config.backgroundColor,
-                    'height': ( util.windowHeight / 3 ),
-                    'width': ( util.windowWidth / 3 ) } )
+                    this.templateData.parts.homeButton.css( {
+                        'background-color': config.backgroundColor,
+                        'height': ( util.windowHeight / 3 ),
+                        'width': ( util.windowWidth / 3 ) } )
                 
                 $homeButton.css( {
                     top: ( ( util.windowHeight - $homeButton.outerHeight( true ) ) / 3 ),
                     left: ( ( util.windowWidth - $homeButton.outerWidth( true ) ) / 2 ) } );
 
                 util.centerEl( {
-                    el: this.$domEls.homeButtonText[0],
+                    el: this.templateData.parts.homeButtonText,
                     parentEl: $homeButton } );
             },
 
@@ -64,15 +67,15 @@ define(
 
             close: function() {
 
-                this.$domEls.homeButton[0].fadeOut( { duration: 1000, done: $.proxy( this.navigate, this ) } );
+                this.templateData.parts.homeButton.fadeOut( {
+                    duration: 1000, done: $.proxy( this.navigate, this ) } );
             },
 
             navigate: function() {
 
-                this.$domEls.homeButton[0].remove();
+                this.templateData.parts.homeButton.remove();
 
                 this.options.appRouter.navigate( 'music', { trigger: true } ); 
-
             }
 
         } );

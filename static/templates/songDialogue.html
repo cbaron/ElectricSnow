@@ -1,19 +1,16 @@
-<div class="songContainer">
+<div class="songContainer" data-js="songContainer">
 
-    <div class="songTopPanel">
+    <div class="clearfix">
 
-        <div data-index="{{index}}" class="playButton">
-            <div class="playButtonText">Play</div>
+        <div data-index="{{index}}" class="playButton" data-js="playButton">
+            <div class="playButtonText" data-js="playButtonText">Play</div>
         </div>
     
-        <div class="purchaseButton">
+        <div class="purchaseButton clearfix" data-js="purchaseButton">
             <div class="purchaseLabel">Purchase</div>
             <div class="costLabel">.99</div>
-            <div style="clear:both;"></div>
         </div>    
             
-        <div style="clear:both;"></div>
-
     </div>
 
     <div class="songName">{{name}}</div>

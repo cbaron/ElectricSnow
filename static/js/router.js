@@ -1,8 +1,14 @@
 define(
 
-    [ 'jquery', 'underscore', 'backbone', 'views/homeButton', 'views/domainText', 'views/music' ],
+    [
+        'jquery',
+        'underscore',
+        'backbone',
+        'views/domainText',
+        'views/music'
+    ],
 
-    function( $, _, Backbone, HomeButtonView, DomainTextView, MusicView ) {
+    function( $, _, Backbone, DomainTextView, MusicView ) {
       
         var AppRouter = Backbone.Router.extend( {
 
@@ -11,19 +17,20 @@ define(
                 'music': 'musicRoute',
 
                 '*actions': 'defaultRoute'
-                
-                                        
             },
 
             musicRoute: function() {
-                
+               
                 if( 'musicView' in this ) {
                     
                     this.musicView.toggle();
 
                 } else {
 
-                    this.musicView = new MusicView( { appRouter: this } );
+                    require( [ 'views/music' ], function( MusicView ) {
+
+                        this.musicView = new MusicView( { appRouter: this } );
+                    } );
                 }
                 
                 if( !( 'domainTextView' in this ) ) {
@@ -38,10 +45,16 @@ define(
 
                     this.musicView.toggle();
                 }
+
+                require( [ 'views/homeButton' ], function( HomeButtonView ) {
                 
-                this.homeButtonView = new HomeButtonView( { appRouter: this } );
-                this.domainTextView = new DomainTextView();
+                    this.homeButtonView = new HomeButtonView( { appRouter: this } );
+                    this.domainTextView = new DomainTextView();
+                } );
             },
+
+            loadDomainText: function() {
+            }
 
         } );
 
@@ -51,7 +64,7 @@ define(
 
             Backbone.history.start();
         };
-        
+
         return { initialize: initialize } 
     }
 );

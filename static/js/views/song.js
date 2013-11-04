@@ -1,8 +1,19 @@
 define(
 
-    [ 'jquery', 'jqueryUI', 'underscore', 'backbone', 'util', 'config', 'jquery.jplayer.min', 'snowfall.jquery', 'text!templates/songView.html' ],
+    [
+        'jquery',
+        'underscore',
+        'backbone',
+        'util',
+        'config',
+        'jquery.jplayer.min',
+        'text!templates/songView.html',
+        'snowfall.jquery',
+        'css!styles/songView',
+        'jqueryUI'
+    ],
             
-    function( $, undefined, _, Backbone, util, config, jPlayer, undefined, songViewTemplate  ) {
+    function( $, _, Backbone, util, config, jPlayer, songViewTemplate ) {
 
         var SongView = Backbone.View.extend( {
         
@@ -10,8 +21,7 @@ define(
 
                 "click .jPlayerPlay": "handlePlayButtonClick",
                 "click .jPlayerPause": "handlePauseButtonClick",
-                "click .songCloseButton": "handleCloseButtonClick"
-                
+                "click .closeButton": "handleCloseButtonClick"
             },
 
             initialize: function() {
@@ -24,42 +34,41 @@ define(
             },
 
             render: function() {
-                
-                this.$domEls =
-                    util.slurpTemplate(
-                        $( _.template( songViewTemplate, { songName: this.options.name } ) )
-                            .appendTo( this.$el ) );
+
+                this.templateData =
+                    util.slurpTemplate( _.template( songViewTemplate, { songName: this.options.name } ) );
+
+                this.$el.append( this.templateData.$template );
             },
 
             positionElements: function() {
 
-                var _this = this;
-
-                var closeButton = this.$domEls.songCloseButton[ 0 ];
-                var modalForm = this.options.modalEls.modalBoxForm[ 0 ];
-                var modalFormPosition = modalForm.position();
-
-                var jPlayerControlContainer = $( '#jp_container_1' );
+                var _this = this,
+                    parts = this.templateData.parts,
+                    closeButton = parts.closeButton,
+                    modalForm = this.options.modalEls.form,
+                    modalFormPosition = modalForm.position(),
+                    jPlayerControlContainer = parts.jPlayerControlContainer;
 
                 closeButton.css( {
                     top: ( modalFormPosition.top +
                           parseInt( modalForm.css( 'margin-top' ) ) ),
                     left: modalFormPosition.left + modalForm.outerWidth() - ( closeButton.outerWidth( true ) ) } );
                
-                for( var i = 0, ii = this.$domEls.modalSongDialogue.length; i < ii; i++ ) {
+                for( var i = 0, ii = parts.textContent.length; i < ii; i++ ) {
  
                     util.centerEl( {
-                        el: this.$domEls.modalSongDialogue[ i ],
+                        el: parts.textContent[ i ],
                         parentEl: modalForm } );
 
-                    if( i !== 0 ) { this.$domEls.modalSongDialogue[ i ].hide(); }
+                    if( i !== 0 ) { parts.textContent[ i ].hide(); }
                 }
 
-                this.$domEls.jPlayer[0].jPlayer( {
+                parts.jPlayer.jPlayer( {
                         
                     ready: function () {
 
-                        $(this).jPlayer( "setMedia", { mp3: 'static/songs/' + _this.options.file } );
+                        parts.jPlayer.jPlayer( "setMedia", { mp3: 'static/songs/' + _this.options.file } );
                     },
                              
                     supplied: "mp3",
@@ -73,21 +82,20 @@ define(
                     top: ( modalFormPosition.top +
                            parseInt( modalForm.css( 'margin-top' ) ) +
                            modalForm.outerHeight() ) - jPlayerControlContainer.outerHeight( true ),
-                    left: this.$domEls.modalSong[0].position().left } );
+                    left: parts.container.position().left } );
 
-                this.$domEls.jPlayerSeekContainer[0].width( 200 );
+                parts.seekContainer.width( 200 );
 
-                this.$domEls['jp-play-bar'][0].css( { 'background-color': config.textColor } );
-                this.$domEls['jp-seek-bar'][0].css( { 'background-color': config.backgroundColor } );
+                parts.playBar.css( { 'background-color': config.textColor } );
+                parts.seekBar.css( { 'background-color': config.backgroundColor } );
                 
-                this.$domEls['jp-audio'][0].width( this.$domEls.modalSong[0].width() );
+                parts.jPlayerControlContainer.width( parts.container.width() );
 
-                this.$domEls.jPlayerSeekContainer[0]
-                    .height( this.$domEls.jPlayerPlay[0].height() )
-                    .width( this.$domEls[ 'modalSong' ][0].width() -
-                            this.$domEls.jPlayerPlay[0].outerWidth( true ) -
-                            this.$domEls.jPlayerPause[0].outerWidth( true ) );
-
+                parts.seekContainer
+                    .height( parts.playButton.height() )
+                    .width( parts.container.width() -
+                            parts.playButton.outerWidth( true ) -
+                            parts.pauseButton.outerWidth( true ) );
             },
 
             beginAnimation: function() {
@@ -106,7 +114,7 @@ define(
                         { var next = $(this).next();
                           next.fadeIn( 500 );
                           if( next.hasClass('snow') ) {
-                              _this.$domEls.jPlayerPlay[0].click();
+                              _this.templateData.parts.playButton.click();
                               $('.modalBoxForm').snowfall();
                           } else if( $( this ).hasClass('snow') ) {
                               $('.modalBoxForm').snowfall( 'clear' );
@@ -115,13 +123,12 @@ define(
 
             handlePlayButtonClick: function() {
 
-                this.$domEls.jPlayer[0].jPlayer( 'play' );
-                
+                this.templateData.parts.jPlayer.jPlayer( 'play' );
             },
             
             handlePauseButtonClick: function() {
                 
-                this.$domEls.jPlayer[0].jPlayer( 'pause' );
+                this.templateData.parts.jPlayer.jPlayer( 'pause' );
             },
 
             handleCloseButtonClick: function() {
