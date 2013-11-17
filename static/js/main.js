@@ -1,11 +1,10 @@
-/*
 requirejs.config( {
 
     paths: {
         
         templates: '../templates',
         views: 'views',
-        styles: '../css',
+        styles: '../css'
     },
 
     shim: {
@@ -46,19 +45,13 @@ requirejs.config( {
             deps: [ 'jquery' ],
             exports: undefined
         }
-    }
+    },
 
+    map: {
+        '*': {
+            'css': 'css'
+        }
+    }
 } );
-*/
-
-define(
-
-    [ 'app', 'css!styles/app' ],
-    
-    function( App ) {
-
-        _.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };
-
-        App.initialize();
-    }
-);
+  
+require(['appInit']);

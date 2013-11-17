@@ -122,8 +122,6 @@ define(
 
             navigate: function() {
 
-                this.content.remove();
-
                 this.options.appRouter.navigate( 'music', { trigger: true } ); 
 
             },

@@ -10,9 +10,10 @@ define(
         'text!templates/songView.html',
         'snowfall.jquery',
         'css!styles/songView',
+        'css!styles/snow',
         'jqueryUI'
     ],
-            
+
     function( $, _, Backbone, util, config, jPlayer, songViewTemplate ) {
 
         var SongView = Backbone.View.extend( {

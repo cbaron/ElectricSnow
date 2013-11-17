@@ -18,7 +18,7 @@ define(
 
             events: {
 
-                'click .homeButton': 'close'
+                'click .homeButton': 'navigate'
             },
 
             initialize: function() {
@@ -57,23 +57,29 @@ define(
 
             handleKeyUp: function( e ) {
 
-               if( e.keyCode == 13 ) {
-                
-                    $(document).off( 'keyup', $.proxy( this.handleKeyUp, this ) );
-                    this.close();
-               }
-
+               if( e.keyCode == 13 ) { this.navigate(); }
             },
 
-            close: function() {
+            toggle: function() {
 
-                this.templateData.parts.homeButton.fadeOut( {
-                    duration: 1000, done: $.proxy( this.navigate, this ) } );
+                var fadeArgs = { duation: 1000 };
+
+                if( this.templateData.parts.homeButton.is(':visible') ) {
+
+                    $(document).off( 'keyup', $.proxy( this.handleKeyUp, this ) );
+
+                    this.templateData.parts.homeButton.fadeOut(
+                        $.extend( fadeArgs, { done: $.proxy( this.navigate, this ) } ) );
+
+                } else {
+                    
+                    this.templateData.parts.homeButton.fadeIn( fadeArgs );
+                    
+                    $(document).on( 'keyup', $.proxy( this.handleKeyUp, this ) );
+                }
             },
 
             navigate: function() {
-
-                this.templateData.parts.homeButton.remove();
 
                 this.options.appRouter.navigate( 'music', { trigger: true } ); 
             }
