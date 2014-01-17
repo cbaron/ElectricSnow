@@ -1,8 +1,10 @@
 .songContainer {
-    padding: 2em;
+    padding-left: 3em;
+    padding-right: 3em;
 }
 
 .playButton {
+    background-color: #15375e;
     text-align: center;
     cursor: pointer;
     height: 3em;
@@ -17,6 +19,7 @@
 }
 
 .purchaseButton {
+    background-color: #15375e;
     cursor: pointer;
     float: left;
     width: 8em;

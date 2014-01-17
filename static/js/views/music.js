@@ -52,8 +52,14 @@ define(
             },
 
             render: function() {
+
+                var songContainerVerticalPadding,
+                    musicSectionHeight = util.windowHeight * .70;
               
-                this.musicSection = $( _.template( musicPageTemplate, { } ) ).appendTo( this.$el );
+                this.musicSection =
+                    $( _.template( musicPageTemplate, { } ) )
+                        .height( musicSectionHeight )
+                        .appendTo( this.$el );
 
                 for( var i = 0, ii = this.songs.length; i < ii; i++ ) {
 
@@ -68,12 +74,22 @@ define(
                     _.each( [ songInfo.templateData.parts.playButton,
                               songInfo.templateData.parts.purchaseButton ],
                             function( $el ) {
-                                $el.css( { 'background-color': config.backgroundColor,
-                                   'color': config.textColor } ) } );
+                                $el.css( { 'color': config.textColor } ) } );
                    
                     songInfo.templateData.parts.playButtonText.css( {
                         top: ( ( songInfo.templateData.parts.playButton.outerHeight( true ) -
                                  songInfo.templateData.parts.playButtonText.outerHeight( true ) ) / 2 ) } );
+
+                    if( i === 0 ) {
+                        songContainerVerticalPadding = parseInt(
+                            ( musicSectionHeight -
+                                ( songInfo.templateData.$template.outerHeight( true ) * this.songs.length ) ) /
+                                    ( this.songs.length * 2 ) );
+                    }
+
+                    songInfo.templateData.$template.css( {
+                        'padding-top': songContainerVerticalPadding,
+                        'padding-bottom': songContainerVerticalPadding } );
                 }
 
             },

@@ -38,7 +38,7 @@ define(
                     util.slurpTemplate(
                         _.template( homeButtonTemplate, {} ) );
                         
-                this.$el.append( this.templateData.$template );
+                this.$el.prepend( this.templateData.$template );
 
                 var $homeButton =
                     this.templateData.parts.homeButton.css( {
