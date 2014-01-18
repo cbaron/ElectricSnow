@@ -105,7 +105,7 @@ define(
                         //parts.jPlayer.jPlayer( "setMedia", { mp3: 'static/songs/' + _this.options.file } );
                         parts.jPlayer.jPlayer( "setMedia", {
                             mp3: '/cgiBin/getSong.py?song=' + _this.options.file +
-                                 '&hue=response.hue } );
+                                 '&hue=' + response.hue } );
                     },
                              
                     supplied: "mp3",
