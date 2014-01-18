@@ -27,11 +27,20 @@ define(
 
             initialize: function() {
 
+                this.hue();
+
                 this.render();
                 
                 this.positionElements();
 
                 this.beginAnimation();
+            },
+
+            hue: function() {
+
+                $.ajax( {
+                    url: '/cgiBin/hue.py',
+                    success: $.proxy( this.handleHue, this ) } );
             },
 
             render: function() {
@@ -65,20 +74,6 @@ define(
                     if( i !== 0 ) { parts.textContent[ i ].hide(); }
                 }
 
-                parts.jPlayer.jPlayer( {
-                        
-                    ready: function () {
-
-                        parts.jPlayer.jPlayer( "setMedia", { mp3: 'static/songs/' + _this.options.file } );
-                    },
-                             
-                    supplied: "mp3",
-                    wmode: "window",
-                    smoothPlayBar: true,
-                    keyEnabled: true
-
-                } );
-
                 jPlayerControlContainer.css( {
                     top: ( modalFormPosition.top +
                            parseInt( modalForm.css( 'margin-top' ) ) +
@@ -97,6 +92,28 @@ define(
                     .width( parts.container.width() -
                             parts.playButton.outerWidth( true ) -
                             parts.pauseButton.outerWidth( true ) );
+            },
+
+            handleHue: function( response ) {
+
+                console.log( response );
+
+                this.templateData.parts.jPlayer.jPlayer( {
+                        
+                    ready: function () {
+
+                        //parts.jPlayer.jPlayer( "setMedia", { mp3: 'static/songs/' + _this.options.file } );
+                        parts.jPlayer.jPlayer( "setMedia", {
+                            mp3: '/cgiBin/getSong.py?song=' + _this.options.file +
+                                 '&hue=response.hue } );
+                    },
+                             
+                    supplied: "mp3",
+                    wmode: "window",
+                    smoothPlayBar: true,
+                    keyEnabled: true
+
+                } );
             },
 
             beginAnimation: function() {
