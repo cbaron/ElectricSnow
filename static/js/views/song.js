@@ -27,11 +27,11 @@ define(
 
             initialize: function() {
 
-                this.hue();
-
                 this.render();
                 
                 this.positionElements();
+
+                this.hue();
 
                 this.beginAnimation();
             },
@@ -96,16 +96,17 @@ define(
 
             handleHue: function( response ) {
 
-                console.log( response );
+                var parts = this.templateData.parts,
+                    url = '/cgiBin/getSong.mp3?song=' + this.options.file +
+                          '&hue=' + response.hue;
 
-                this.templateData.parts.jPlayer.jPlayer( {
+                parts.jPlayer.jPlayer( {
                         
                     ready: function () {
 
                         //parts.jPlayer.jPlayer( "setMedia", { mp3: 'static/songs/' + _this.options.file } );
-                        parts.jPlayer.jPlayer( "setMedia", {
-                            mp3: '/cgiBin/getSong.py?song=' + _this.options.file +
-                                 '&hue=' + response.hue } );
+
+                        parts.jPlayer.jPlayer( "setMedia", { mp3: url } );
                     },
                              
                     supplied: "mp3",
