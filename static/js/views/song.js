@@ -97,18 +97,20 @@ define(
             handleHue: function( response ) {
 
                 var parts = this.templateData.parts,
-                    url = '/cgiBin/getSong.mp3?song=' + this.options.file +
+                    url = '/cgiBin/getSong.php?song=' + this.options.file +
                           '&hue=' + response.hue;
 
+                var _this = this;
+                
                 parts.jPlayer.jPlayer( {
                         
                     ready: function () {
 
-                        //parts.jPlayer.jPlayer( "setMedia", { mp3: 'static/songs/' + _this.options.file } );
-
+                        //parts.jPlayer.jPlayer( "setMedia", { mp3: 'static/songs/' + _this.options.file + '?hue=' + response.hue } );
                         parts.jPlayer.jPlayer( "setMedia", { mp3: url } );
                     },
                              
+                    swfPath: 'static/js',
                     supplied: "mp3",
                     wmode: "window",
                     smoothPlayBar: true,
