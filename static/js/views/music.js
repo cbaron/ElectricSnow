@@ -110,7 +110,7 @@ define(
 
                 this.initializeModalDialogue(); 
 
-                var songView =
+                this.songView =
                     new SongView( {
                         el: this.modalView.templateData.parts.form,
                         file: this.songs[ $( e.currentTarget ).attr( 'data-index' ) ].file,
@@ -118,17 +118,26 @@ define(
                         modalEls: this.modalView.templateData.parts
                     } );
 
-                this.modalView.listenTo( songView, 'closeClicked', this.modalView.closeDialogue );
+                //poor design
+                this.songView.listenToOnce( this.modalView, 'closingModal', this.songView.huehue );
+                this.listenToOnce( this.modalView, 'closingModal', this.handleClosingModal );
+                this.modalView.listenToOnce( this.songView, 'closeClicked', this.modalView.closeDialogue );
             },
-            
-            purchaseMusic: function() {
+
+            handleClosingModal: function() {
+
+                this.songView = { };
+            },
+
+            purchaseMusic: function( e ) {
 
                 this.initializeModalDialogue();
 
                 var purchaseView =
                     new PurchaseView( {
                         el: this.modalView.templateData.parts.form,
-                        modalEls: this.modalView.templateData.parts
+                        modalEls: this.modalView.templateData.parts,
+                        song: this.songs[ $( e.currentTarget ).attr( 'data-index' ) ].file,
                     } );
 
                 this.modalView.listenTo( purchaseView, 'closeClicked', this.modalView.closeDialogue );

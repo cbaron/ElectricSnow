@@ -1,0 +1,1 @@
+Load home page.  Load music page.  Go back to home Page.  Go again to music page -- music dialogue renders in middle of DOM, then juts up after Home button disappears.  -- Make better

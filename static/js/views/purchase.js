@@ -67,7 +67,11 @@ define(
             },
  
             handlePayButtonSubmission: function( e ) {
-        
+    
+                var parts = this.templateData.parts;
+
+                e.preventDefault();
+
                 // Disable the submit button to prevent repeated clicks
                 parts.paymentForm.find('button').prop( 'disabled', true );
 
@@ -78,6 +82,8 @@ define(
             },
 
             stripeResponseHandler: function( status, response ) {
+                
+                var parts = this.templateData.parts;
                
                 var $payForm = parts.paymentForm;
 
@@ -89,13 +95,30 @@ define(
 
                 } else {
 
-                    // Insert the token into the form so it gets submitted to the server
-                    $payForm.append( $( '<input type="hidden" name="stripeToken" />' ).val( response.id ) );
+                    this.token = response.id;
 
-                    // and submit
-                    $payForm.get(0).submit();
+                    $.ajax( { url: '/cgiBin/processPayment.py',
+                              type: 'GET',
+                              data: { stripeToken: response.id },
+                              success: $.proxy( this.handlePaymentSuccess, this ) } );
 
                   }
+            },
+
+            handlePaymentSuccess: function( response ) {
+
+                this.trigger( 'closeClicked' );
+
+                if( this.token == response.id ) {
+                    
+                    window.location.href = '/cgiBin/downloadSong.php?song=' + encodeURIComponent( this.options.song );
+                }
+
+            },
+
+            handleCloseButtonClick: function() {
+
+                this.trigger( 'closeClicked' );
             }
 
         } );

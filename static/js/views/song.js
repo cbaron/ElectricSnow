@@ -29,9 +29,9 @@ define(
 
                 this.render();
                 
-                this.positionElements();
-
                 this.hue();
+                
+                this.positionElements();
 
                 this.beginAnimation();
             },
@@ -41,6 +41,12 @@ define(
                 $.ajax( {
                     url: '/cgiBin/hue.py',
                     success: $.proxy( this.handleHue, this ) } );
+            },
+
+            huehue: function() {
+                $.ajax( { url: '/cgiBin/huehue.py',
+                          type: 'POST',
+                          data: { hue: this.hue } } );
             },
 
             render: function() {
@@ -100,13 +106,12 @@ define(
                     url = '/cgiBin/getSong.php?song=' + this.options.file +
                           '&hue=' + response.hue;
 
-                var _this = this;
-                
+                this.hue = response.hue;
+
                 parts.jPlayer.jPlayer( {
                         
                     ready: function () {
 
-                        //parts.jPlayer.jPlayer( "setMedia", { mp3: 'static/songs/' + _this.options.file + '?hue=' + response.hue } );
                         parts.jPlayer.jPlayer( "setMedia", { mp3: url } );
                     },
                              

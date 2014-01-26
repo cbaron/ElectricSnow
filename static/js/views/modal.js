@@ -114,6 +114,8 @@ define(
 
                 util.$document.off( 'keydown', this.handleKeyPress );
                 util.$document.off( 'click', this.handleClick );
+
+                this.trigger( 'closingModal' );
             },
 
             affirmDialogue: function() {

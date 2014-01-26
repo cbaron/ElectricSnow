@@ -8,16 +8,22 @@ define( function() {
 
         songs: [
 
-            { name: '"Filipe Catto"',
-              file: 'Filipe Catto - Saga.mp3'
+            { name: '"Momentum"',
+              file: 'Momentum.m4a'
             },
 
-            { name: '"Veins"',
-              file: 'Heroin and Your Veins - Bad Luck.mp3'
+            { name: '"An Air That Kills"',
+              file: 'An_AirThat_Kills_MIX1.mp3'
             },
             
-            { name: '"Sore"',
-              file: 'Sore - Ambang.mp3'
+            { 
+              name: '"Winter Dreams Pt. 1"',
+              file: 'WinterDreams_PT_1.m4a'
+            },
+
+            { 
+              name: '"Winter Dreams Pt. 2"',
+              file: 'WinterDreams_PT_2.m4a'
             }
         ]
     }

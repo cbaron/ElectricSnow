@@ -1,6 +1,11 @@
 .songContainer {
-    padding-left: 3em;
-    padding-right: 3em;
+    padding: 5px
+    box-shadow: 0px 0px 10px -3px #2c539e;
+    -webkit-box-shadow: 0px 0px 10px -3px #2c539e;
+    -moz-box-shadow: 0px 0px 10px -3px #2c539e;
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=, Color='#2c539e')";
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=0, Color='#2c539e');
 }
 
 .playButton {
